@@ -20,6 +20,16 @@ function displaySearchResults(data){
     const searchResultsArray = data.response.hits;
 
     for(var i = 0; i < searchResultsArray.length; i++){
+        //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
+        const songId = searchResultsArray[i].result.id;
+        //store other info to be displayed in DOM
+        const songTitle = searchResultsArray[i].result.title;
+        const songArtistName = searchResultsArray[i].result.primary_artist.name;
+        const songImg = searchResultsArray[i].result.song_art_image_thumbnail_url;
+
+
+
+        console.log(songImg);
         console.log(searchResultsArray[i]);
     }
 }
