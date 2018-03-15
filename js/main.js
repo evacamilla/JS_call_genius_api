@@ -9,11 +9,24 @@ const producersUl = document.getElementById('producersUl');
 const writersUl = document.getElementById('writersUl');
 
 const displayArtistDiv = document.getElementById('displayArtistDiv');
+const artistNameHeading = document.getElementById('artistNameHeading');
+const artistImage = document.getElementById('artistImage');
+const songsByArtistUl = document.getElementById('songsByArtistUl');
 
 
-    
+
+/* eventlistener */
+searchButton.addEventListener('click', function() {
+    const searchQuery = searchInput.value;
+    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
+
+        callApi(apiURL)
+        .then(function(data) {
+            displaySearchResults(data);
+        });
+})
+
 /* f u nc t i o n s */
-
 
 function callApi(apiURL){
     //access token for security
@@ -31,7 +44,6 @@ function callApi(apiURL){
         })
     return requestData;
 }
-
 
 
 /* fetch functions using callApi */
@@ -55,12 +67,12 @@ function fetchAndDisplayOneArtist(id){
     });
 }
 
-function fetchAndDisplayArtistSongs(id){
+function fetchAndDisplaySongsByArtist(id){
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
 
     callApi(apiURL)
     .then(function(data) {
-        displayArtistSongs(data);
+        displaySongsByArtist(data);
     });
 }
 
@@ -107,7 +119,7 @@ function displaySongFull(data){
 
 
 
-function displayArtistSongs(data){
+function displaySongsByArtist(data){
     songsByArtistArray = data.response.songs;
 
     for(let song of songsByArtistArray){
@@ -117,7 +129,16 @@ function displayArtistSongs(data){
 }
 
 function displayArtist(data){
-    console.log(data);
+    const artist = data.response.artist;
+
+    const artistNameTextNode = document.createTextNode(artist.name);
+    
+    artistNameHeading.appendChild(artistNameTextNode);
+    artistImage.src = artist.image_url;
+
+
+
+    console.log(artist);
 }
 
 
@@ -157,18 +178,6 @@ function displaySearchResults(data){
     }
 }
 
-
-/* eventlistener */
-
-searchButton.addEventListener('click', function() {
-    const searchQuery = searchInput.value;
-    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
-
-        callApi(apiURL)
-        .then(function(data) {
-            displaySearchResults(data);
-        });
-})
 
 
 /*
