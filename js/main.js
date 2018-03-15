@@ -40,9 +40,15 @@ function displaySearchResults(data){
         img.src = songImgUrl;
         li.appendChild(img);
         li.appendChild(songInfoTextNode);
+
+        //eventlistener so that when clicked we call api using the songId to get more info
+        li.addEventListener('click', function(){
+            console.log(songId);
+        })
+
+        //lastly append li to ul in DOM
         searchResultsUl.appendChild(li);
 
-        console.log(songInfoTextNode);
         console.log(searchResultsArray[i]);
     }
 }
