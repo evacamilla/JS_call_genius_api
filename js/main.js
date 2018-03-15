@@ -16,7 +16,7 @@ const displayArtistDiv = document.getElementById('displayArtistDiv');
 
 function callApi(apiURL){
     //access token for security
-    const myToken = 'c1xEgpHh4mQnAng-IrOOlg4E76g-eDt1lzDexfUPh1xq2429SFHC9oVwZC1veo69';
+    const myToken = 'wRvUcrsqmhtD3in0K9NJbPk6bL2MBaaa6p8Zoqq3bHzbhwaGlQ_zc1-SP92mpdqv';
 
     const request = new Request(apiURL, {
         headers: new Headers({
@@ -33,7 +33,6 @@ function callApi(apiURL){
 
 
 function fetchAndDisplayOneSong(songId){
-
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
     callApi(apiURL)
@@ -42,9 +41,9 @@ function fetchAndDisplayOneSong(songId){
     });
 }
 
-function fetchAndDisplayOneArtist(id){
 
-    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}`;
+function fetchAndDisplayOneArtist(id){
+    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
 
     callApi(apiURL)
     .then(function(data) {
@@ -66,6 +65,7 @@ function displaySongFull(data){
         li.addEventListener('click', function(){
             fetchAndDisplayOneArtist(producerId);
         })
+        
         producersUl.appendChild(li);
     }
 
@@ -77,12 +77,24 @@ function displaySongFull(data){
 
         const li = document.createElement('li');
         li.appendChild(writerNameTextNode);
+
+        li.addEventListener('click', function(){
+            fetchAndDisplayOneArtist(writerId);
+        })
+
         writersUl.appendChild(li);
     }
 }
 
+
+
 function displayArtist(data){
-    console.log(data);
+    songsByArtistArray = data.response.songs;
+
+    for(let song of songsByArtistArray){
+        songTitle = song.title;
+        console.log(songTitle);
+    }
 }
 
 
