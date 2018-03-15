@@ -15,6 +15,13 @@ function createRequest(apiURL){
     return request;
 }
 
+
+function displaySearchResults(data){
+    console.log(data);
+}
+
+
+
 searchButton.addEventListener('click', function() {
     const searchQuery = searchInput.value;
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
@@ -26,8 +33,6 @@ searchButton.addEventListener('click', function() {
             return response.json();
         })
         .then(function(data) {
-            console.log(data);
+            displaySearchResults(data);
         });
 })
-
-
