@@ -5,6 +5,9 @@ const searchResultsDiv = document.getElementById('searchResultsDiv');
 const searchResultsUl = document.getElementById('searchResultsUl');
 
 const displaySongDiv = document.getElementById('displaySongDiv');
+const producersUl = document.getElementById('producersUl');
+const writersUl = document.getElementById('writersUl');
+
 
     
 /* f u nc t i o n s */
@@ -26,24 +29,24 @@ function callApi(apiURL){
 }
 
 
+function displaySongFull(data){
+    console.log(data.response.song.producer_artists);
+}
 
-function displayOneSong(songId){
-    searchResultsDiv.style.display = "none";
-    displaySongDiv.style.display = "block";
+
+function fetchAndDisplayOneSong(songId){
 
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
     callApi(apiURL)
     .then(function(data) {
-        console.log(data.response.song.producer_artists);
+        displaySongFull(data);
     });
 }
 
 
 
 function displaySearchResults(data){
-    searchResultsDiv.style.display = "block";
-    displaySongDiv.style.display = "none";
 
     const searchResultsArray = data.response.hits;
 
@@ -66,8 +69,12 @@ function displaySearchResults(data){
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
+            searchResultsDiv.style.display = "none";
+            displaySongDiv.style.display = "block";
+
             //to send parameter without calling the function this works..(..??)
-            displayOneSong(songId, li)
+            fetchAndDisplayOneSong(songId)
+            //TODO:HIDE LI SIBLINGS HERE
         });
 
         //lastly append li to ul in DOM
