@@ -14,6 +14,7 @@ const displayArtistDiv = document.getElementById('displayArtistDiv');
     
 /* f u nc t i o n s */
 
+
 function callApi(apiURL){
     //access token for security
     const myToken = 'wRvUcrsqmhtD3in0K9NJbPk6bL2MBaaa6p8Zoqq3bHzbhwaGlQ_zc1-SP92mpdqv';
@@ -32,6 +33,9 @@ function callApi(apiURL){
 }
 
 
+
+/* fetch functions using callApi */
+
 function fetchAndDisplayOneSong(songId){
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
@@ -43,7 +47,7 @@ function fetchAndDisplayOneSong(songId){
 
 
 function fetchAndDisplayOneArtist(id){
-    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
+    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}`;
 
     callApi(apiURL)
     .then(function(data) {
@@ -51,6 +55,18 @@ function fetchAndDisplayOneArtist(id){
     });
 }
 
+function fetchAndDisplayArtistSongs(id){
+    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
+
+    callApi(apiURL)
+    .then(function(data) {
+        displayArtistSongs(data);
+    });
+}
+
+
+
+/* display functions ..kind of referred in the fetch functions*/
 
 function displaySongFull(data){
     const producersArray = data.response.song.producer_artists;
@@ -63,12 +79,13 @@ function displaySongFull(data){
         li.appendChild(producerNameTextNode);
 
         li.addEventListener('click', function(){
+            displaySongDiv.style.display = "none";
+            displayArtistDiv.style.display = "block";
             fetchAndDisplayOneArtist(producerId);
         })
         
         producersUl.appendChild(li);
     }
-
 
     const writersArray = data.response.song.writer_artists;
     for(let writer of writersArray){
@@ -79,6 +96,8 @@ function displaySongFull(data){
         li.appendChild(writerNameTextNode);
 
         li.addEventListener('click', function(){
+            displaySongDiv.style.display = "none";
+            displayArtistDiv.style.display = "block";
             fetchAndDisplayOneArtist(writerId);
         })
 
@@ -88,13 +107,17 @@ function displaySongFull(data){
 
 
 
-function displayArtist(data){
+function displayArtistSongs(data){
     songsByArtistArray = data.response.songs;
 
     for(let song of songsByArtistArray){
         songTitle = song.title;
-        console.log(songTitle);
+        console.log(song.title + song.primary_artist.name);
     }
+}
+
+function displayArtist(data){
+    console.log(data);
 }
 
 
@@ -135,6 +158,7 @@ function displaySearchResults(data){
 }
 
 
+/* eventlistener */
 
 searchButton.addEventListener('click', function() {
     const searchQuery = searchInput.value;
