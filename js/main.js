@@ -25,11 +25,19 @@ function displaySearchResults(data){
         //store other info to be displayed in DOM
         const songTitle = searchResultsArray[i].result.title;
         const songArtistName = searchResultsArray[i].result.primary_artist.name;
-        const songImg = searchResultsArray[i].result.song_art_image_thumbnail_url;
+        const songImgUrl = searchResultsArray[i].result.song_art_image_thumbnail_url;
 
+        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
 
+        const li = document.createElement('li');
+        const img = document.createElement('img');
 
-        console.log(songImg);
+        img.src = songImgUrl;
+        li.appendChild(img);
+        li.appendChild(songInfoTextNode);
+        searchResultsUl.appendChild(li);
+
+        console.log(songInfoTextNode);
         console.log(searchResultsArray[i]);
     }
 }
