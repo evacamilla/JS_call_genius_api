@@ -17,7 +17,11 @@ function createRequest(apiURL){
 
 
 function displaySearchResults(data){
-    console.log(data);
+    const searchResultsArray = data.response.hits;
+
+    for(var i = 0; i < searchResultsArray.length; i++){
+        console.log(searchResultsArray[i]);
+    }
 }
 
 
