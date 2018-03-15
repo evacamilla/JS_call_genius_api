@@ -43,7 +43,13 @@ function displaySearchResults(data){
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
-            console.log(songId);
+            searchResultsUl.style.display = "none";
+            const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
+
+            callApi(apiURL)
+            .then(function(data) {
+                console.log(data.response.song.producer_artists[0].name);
+            });
         })
 
         //lastly append li to ul in DOM
