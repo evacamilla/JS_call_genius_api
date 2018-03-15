@@ -22,6 +22,8 @@ function callApi(apiURL){
 
 
 function displaySearchResults(data){
+    searchResultsDiv.style.display = "block";
+    displaySongDiv.style.display = "none";
     const searchResultsArray = data.response.hits;
 
     for(var i = 0; i < searchResultsArray.length; i++){
@@ -43,7 +45,8 @@ function displaySearchResults(data){
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
-            searchResultsUl.style.display = "none";
+            searchResultsDiv.style.display = "none";
+            displaySongDiv.style.display = "block";
             const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
             callApi(apiURL)
