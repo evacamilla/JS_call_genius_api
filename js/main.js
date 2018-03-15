@@ -5,7 +5,6 @@ const searchResultsDiv = document.getElementById('searchResultsDiv');
 const searchResultsUl = document.getElementById('searchResultsUl');
 
 const displaySongDiv = document.getElementById('displaySongDiv');
-const displaySongUl = document.getElementById('displaySongUl');
 
     
 /* f u nc t i o n s */
@@ -28,16 +27,15 @@ function callApi(apiURL){
 
 
 
-function displayOneSong(songId, li){
+function displayOneSong(songId){
     searchResultsDiv.style.display = "none";
     displaySongDiv.style.display = "block";
-    displaySongUl.appendChild(li);
 
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
     callApi(apiURL)
     .then(function(data) {
-        console.log(data.response.song.producer_artists[0].name);
+        console.log(data.response.song.producer_artists);
     });
 }
 
