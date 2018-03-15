@@ -5,6 +5,7 @@ const searchResultsDiv = document.getElementById('searchResultsDiv');
 const searchResultsUl = document.getElementById('searchResultsUl');
 
 const displaySongDiv = document.getElementById('displaySongDiv');
+const songTitleHeading = document.getElementById('songTitleHeading');
 const producersUl = document.getElementById('producersUl');
 const writersUl = document.getElementById('writersUl');
 
@@ -81,7 +82,13 @@ function fetchAndDisplaySongsByArtist(id){
 /* display functions ..kind of referred in the fetch functions*/
 
 function displaySongFull(data){
+    //for looping out producers and writers
     const producersArray = data.response.song.producer_artists;
+    const writersArray = data.response.song.writer_artists;
+    
+    const song = data.response.song;
+    const songTitleTextNode = document.createTextNode(song.title);
+    songTitleHeading.appendChild(songTitleTextNode);
 
     for(let producer of producersArray){
         const producerId = producer.id;
@@ -99,7 +106,6 @@ function displaySongFull(data){
         producersUl.appendChild(li);
     }
 
-    const writersArray = data.response.song.writer_artists;
     for(let writer of writersArray){
         const writerId = writer.id;
         const writerNameTextNode = document.createTextNode(writer.name);
