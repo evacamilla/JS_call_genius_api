@@ -43,18 +43,26 @@ function fetchAndDisplayOneSong(songId){
 
 function displaySongFull(data){
     const producersArray = data.response.song.producer_artists;
+
     for(let producer of producersArray){
-        const producerName = producer.name;
         const producerId = producer.id;
-        console.log(producerName + producerId);
+        const producerNameTextNode = document.createTextNode(producer.name);
+
+        const li = document.createElement('li');
+        li.appendChild(producerNameTextNode);
+        producersUl.appendChild(li);
+
     }
 
     const writersArray = data.response.song.writer_artists;
     for(let writer of writersArray){
-        console.log(writer.name);
-    }
+        const writerId = writer.id;
+        const writerNameTextNode = document.createTextNode(writer.name);
 
-    console.log(data.response.song);
+        const li = document.createElement('li');
+        li.appendChild(writerNameTextNode);
+        writersUl.appendChild(li);
+    }
 }
 
 
