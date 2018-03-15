@@ -8,6 +8,8 @@ const displaySongDiv = document.getElementById('displaySongDiv');
 const producersUl = document.getElementById('producersUl');
 const writersUl = document.getElementById('writersUl');
 
+const displayArtistDiv = document.getElementById('displayArtistDiv');
+
 
     
 /* f u nc t i o n s */
@@ -40,6 +42,16 @@ function fetchAndDisplayOneSong(songId){
     });
 }
 
+function fetchAndDisplayOneArtist(id){
+
+    const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}`;
+
+    callApi(apiURL)
+    .then(function(data) {
+        displayArtist(data);
+    });
+}
+
 
 function displaySongFull(data){
     const producersArray = data.response.song.producer_artists;
@@ -50,9 +62,13 @@ function displaySongFull(data){
 
         const li = document.createElement('li');
         li.appendChild(producerNameTextNode);
-        producersUl.appendChild(li);
 
+        li.addEventListener('click', function(){
+            fetchAndDisplayOneArtist(producerId);
+        })
+        producersUl.appendChild(li);
     }
+
 
     const writersArray = data.response.song.writer_artists;
     for(let writer of writersArray){
@@ -63,6 +79,10 @@ function displaySongFull(data){
         li.appendChild(writerNameTextNode);
         writersUl.appendChild(li);
     }
+}
+
+function displayArtist(data){
+    console.log(data);
 }
 
 
@@ -95,7 +115,6 @@ function displaySearchResults(data){
 
             //to send parameter without calling the function this works..(..??)
             fetchAndDisplayOneSong(songId)
-            //TODO:HIDE LI SIBLINGS HERE
         });
 
         //lastly append li to ul in DOM
@@ -118,6 +137,8 @@ searchButton.addEventListener('click', function() {
 
 /*
 TODO:
+show message if no writers or producers??
 user have to reload page to make new search show on top.. /the new results ends up at the bottom
 now user can click on search alot and get result again after result
+
 */
