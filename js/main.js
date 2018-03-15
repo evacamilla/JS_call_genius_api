@@ -13,14 +13,14 @@ var request = new Request(apiURL, {
 });
 
 
-fetch(request)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        //console.log('id: ' + data.response.song.producer_artists[0].id);
-        //console.log('name: ' + data.response.song.producer_artists[0].name);
-    });
+searchButton.addEventListener('click', function() {
+    fetch(request)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+})
 
 
