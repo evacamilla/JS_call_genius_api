@@ -19,6 +19,9 @@ const songsByArtistUl = document.getElementById('songsByArtistUl');
                       /* eventlistener */
 
 searchButton.addEventListener('click', function() {
+    //clear searchDiv
+    removeChildren(searchResultsUl);
+
     const searchQuery = searchInput.value;
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
 
@@ -26,6 +29,8 @@ searchButton.addEventListener('click', function() {
         .then(function(data) {
             displaySearchResults(data);
         });
+
+    searchInput.value = "";
 })
 
 
@@ -73,6 +78,7 @@ function fetchAndDisplayOneArtist(id){
         displayArtist(data);
     });
 }
+
 
 function fetchAndDisplaySongsByArtist(id){
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
@@ -134,11 +140,16 @@ function displaySongFull(data){
     
     //song info
     const song = data.response.song;
-    const songTitleTextNode = document.createTextNode(song.title);
-    songTitleHeading.appendChild(songTitleTextNode);
+    songTitleHeading.innerHTML = `${song.title} By ${song.primary_artist.name}`
+
+    //clear producersUl
+    removeChildren(producersUl);
+    //clear producersUl
+    removeChildren(writersUl);
 
     //producer
     for(let producer of producersArray){
+
         const producerId = producer.id;
         const producerNameTextNode = document.createTextNode(producer.name);
 
@@ -177,9 +188,7 @@ function displaySongFull(data){
 function displayArtist(data){
     const artist = data.response.artist;
 
-    const artistNameTextNode = document.createTextNode(artist.name);
-    
-    artistNameHeading.appendChild(artistNameTextNode);
+    artistNameHeading.innerHTML = artist.name;
     artistImage.src = artist.image_url;
 
     fetchAndDisplaySongsByArtist(artist.id);
@@ -214,5 +223,13 @@ function displaySongsByArtist(data){
         });
 
         songsByArtistUl.appendChild(li);
+    }
+}
+
+
+
+function removeChildren(parentToRemoveFrom){
+    while (parentToRemoveFrom.firstChild) {
+    parentToRemoveFrom.removeChild(parentToRemoveFrom.firstChild);
     }
 }
