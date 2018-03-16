@@ -16,7 +16,8 @@ const songsByArtistUl = document.getElementById('songsByArtistUl');
 
 
 
-/* eventlistener */
+                      /* eventlistener */
+
 searchButton.addEventListener('click', function() {
     const searchQuery = searchInput.value;
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
@@ -27,12 +28,14 @@ searchButton.addEventListener('click', function() {
         });
 })
 
+
+
 //call to the api.. static value for myToken.. 
 //sending in special apiURL: info about what you want to fetch from where
 //handle the data using json
 function callApi(apiURL){
     //access token for security
-    const myToken = 'wRvUcrsqmhtD3in0K9NJbPk6bL2MBaaa6p8Zoqq3bHzbhwaGlQ_zc1-SP92mpdqv';
+    const myToken = 'vN_Jt2wAaah9EyS3NzUFAuW7G_uL43l7lIkWU22Ohwebb9oLbxfzwZa1mEgKpnzV';
 
     const request = new Request(apiURL, {
         headers: new Headers({
@@ -48,7 +51,9 @@ function callApi(apiURL){
 }
 
 
-/* fetch functions using callApi */
+
+
+/***** fetch functions using callApi */
 
 function fetchAndDisplayOneSong(songId){
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
@@ -80,7 +85,47 @@ function fetchAndDisplaySongsByArtist(id){
 
 
 
-/* display functions ..kind of referred in the fetch functions*/
+
+ /**** display functions ..kind of referred in the fetch functions*/
+
+ function displaySearchResults(data){
+    searchResultsDiv.style.display = "block";
+    const searchResultsArray = data.response.hits;
+
+    for(var i = 0; i < searchResultsArray.length; i++){
+        //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
+        const songId = searchResultsArray[i].result.id;
+
+        //store other info to be displayed in DOM
+        const songTitle = searchResultsArray[i].result.title;
+        const songArtistName = searchResultsArray[i].result.primary_artist.name;
+        const songImgUrl = searchResultsArray[i].result.song_art_image_thumbnail_url;
+
+        const li = document.createElement('li');
+        const img = document.createElement('img');
+
+        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
+        img.src = songImgUrl;
+
+        li.appendChild(img);
+        li.appendChild(songInfoTextNode);
+
+        //eventlistener so that when clicked we call api using the songId to get more info
+        li.addEventListener('click', function(){
+            searchResultsDiv.style.display = "none";
+            displaySongDiv.style.display = "block";
+
+            //to send parameter without calling the function this works
+            //lke the function embedded in the anonymous function..(..??)
+            fetchAndDisplayOneSong(songId)
+        });
+
+        //lastly append li to ul in DOM
+        searchResultsUl.appendChild(li);
+    }
+}
+
+
 
 function displaySongFull(data){
     //for looping out producers and writers
@@ -129,15 +174,6 @@ function displaySongFull(data){
 
 
 
-function displaySongsByArtist(data){
-    songsByArtistArray = data.response.songs;
-
-    for(let song of songsByArtistArray){
-        songTitle = song.title;
-        console.log(song.title + song.primary_artist.name);
-    }
-}
-
 function displayArtist(data){
     const artist = data.response.artist;
 
@@ -151,39 +187,32 @@ function displayArtist(data){
 
 
 
-function displaySearchResults(data){
+function displaySongsByArtist(data){
+    songsByArtistArray = data.response.songs;
 
-    const searchResultsArray = data.response.hits;
-
-    for(var i = 0; i < searchResultsArray.length; i++){
-        //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
-        const songId = searchResultsArray[i].result.id;
-
-        //store other info to be displayed in DOM
-        const songTitle = searchResultsArray[i].result.title;
-        const songArtistName = searchResultsArray[i].result.primary_artist.name;
-        const songImgUrl = searchResultsArray[i].result.song_art_image_thumbnail_url;
+    for(let song of songsByArtistArray){
+        const songTitle = song.title;
+        const songArtistName = song.primary_artist.name;
 
         const li = document.createElement('li');
         const img = document.createElement('img');
 
-        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
-        img.src = songImgUrl;
+        const songTextNode = document.createTextNode(`${song.title} By ${song.primary_artist.name}`);
+        img.src = song.header_image_thumbnail_url;
 
         li.appendChild(img);
-        li.appendChild(songInfoTextNode);
+        li.appendChild(songTextNode);
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
-            searchResultsDiv.style.display = "none";
+            displayArtistDiv.style.display = "none";
             displaySongDiv.style.display = "block";
 
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
-            fetchAndDisplayOneSong(songId)
+            fetchAndDisplayOneSong(song.id)
         });
 
-        //lastly append li to ul in DOM
-        searchResultsUl.appendChild(li);
+        songsByArtistUl.appendChild(li);
     }
 }

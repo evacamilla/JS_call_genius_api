@@ -29,30 +29,35 @@ Maybe call soundcloud/last.fm API.
 Spotify has information about credits too, but I can't see that you can access that information through their API yet.
 ***
 
-When no producers/writer info either:
+!When no producers/writer info either:
 - Don't show Written by/Produced by heading or....
 - Display text like no credits/info
+
+!Design
+
+!Search function
+
+!!Empty search results when new search
+
+!!empty search placeholder when clicking in search box
+
+!!Now new textnode value sent to headings in html gets added to instead of replaced when clicking on a song
+
+!Some error message or guide in some way.
+
+Feedback/animation to make it more obvious for user when something is happening/going on
+
+Make artistName clickable when displating songs in searchResults
+
+!Now user can search as many times they like on the same thing
+
+!Toggle class instead of inline styling when show/display
+
+Make one function for looping out songs in displaySearchResults AND displaySongsByArtist..
+Sending array and what listId to looop out in as parameters...
 
 Send meta(?) information like alt="" for images..
 
 Not very safe using cors?? + My token key shows.
 
 Split up the apiURL varible..
-
-Design
-
-Search function
-
-Empty search results when new search
-
-empty search placeholder when clicking in search box
-
-Some error message or guide in some way.
-
-Feedback/animation to make it more obvious for user when something is happening/going on
-
-Make artistName clickable when displating songs in searchResults
-
-Now user can search as many times they like on the same thing
-
-Toggle class instead of inline styling when show/display
