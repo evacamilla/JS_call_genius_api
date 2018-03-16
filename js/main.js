@@ -27,8 +27,9 @@ searchButton.addEventListener('click', function() {
         });
 })
 
-/* f u nc t i o n s */
-
+//call to the api.. static value for myToken.. 
+//sending in special apiURL: info about what you want to fetch from where
+//handle the data using json
 function callApi(apiURL){
     //access token for security
     const myToken = 'wRvUcrsqmhtD3in0K9NJbPk6bL2MBaaa6p8Zoqq3bHzbhwaGlQ_zc1-SP92mpdqv';
@@ -86,10 +87,12 @@ function displaySongFull(data){
     const producersArray = data.response.song.producer_artists;
     const writersArray = data.response.song.writer_artists;
     
+    //song info
     const song = data.response.song;
     const songTitleTextNode = document.createTextNode(song.title);
     songTitleHeading.appendChild(songTitleTextNode);
 
+    //producer
     for(let producer of producersArray){
         const producerId = producer.id;
         const producerNameTextNode = document.createTextNode(producer.name);
@@ -106,6 +109,7 @@ function displaySongFull(data){
         producersUl.appendChild(li);
     }
 
+    //writer
     for(let writer of writersArray){
         const writerId = writer.id;
         const writerNameTextNode = document.createTextNode(writer.name);
@@ -156,17 +160,18 @@ function displaySearchResults(data){
     for(var i = 0; i < searchResultsArray.length; i++){
         //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
         const songId = searchResultsArray[i].result.id;
+
         //store other info to be displayed in DOM
         const songTitle = searchResultsArray[i].result.title;
         const songArtistName = searchResultsArray[i].result.primary_artist.name;
         const songImgUrl = searchResultsArray[i].result.song_art_image_thumbnail_url;
 
-        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
-
         const li = document.createElement('li');
         const img = document.createElement('img');
 
+        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
         img.src = songImgUrl;
+
         li.appendChild(img);
         li.appendChild(songInfoTextNode);
 
@@ -175,7 +180,8 @@ function displaySearchResults(data){
             searchResultsDiv.style.display = "none";
             displaySongDiv.style.display = "block";
 
-            //to send parameter without calling the function this works..(..??)
+            //to send parameter without calling the function this works
+            //lke the function embedded in the anonymous function..(..??)
             fetchAndDisplayOneSong(songId)
         });
 
@@ -183,13 +189,3 @@ function displaySearchResults(data){
         searchResultsUl.appendChild(li);
     }
 }
-
-
-
-/*
-TODO:
-show message if no writers or producers??
-user have to reload page to make new search show on top.. /the new results ends up at the bottom
-now user can click on search alot and get result again after result
-
-*/
