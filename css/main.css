@@ -2,13 +2,34 @@ body{
     background: blanchedalmond;
 }
 
-ul {
-    list-style: none;
-    margin: 0px;
-    padding:0px;
+.container {
+    max-width: 600px;
+    margin: auto;
+    border: 2px solid white;
+    min-height: 100vh;
+    padding: 10px 0;
 }
 
-ul li {
+a {
+    text-decoration: none;
+}
+
+h1{
+    text-align: center;
+    font-size: 2em;
+    margin: 10px 0;
+}
+
+.searchDiv{
+    border: 1px solid red;
+    display: inline-block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+searcResultsUl li {
     margin: 2em 0;
 }
 

@@ -4,52 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>First call api</title>
+    <title>Find producer</title>
+    <link rel="stylesheet" href="css/reset.css" type="text/css">
     <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
-    <h1>
-        <a href="index.html">Search Songs</a>
-    </h1>
+    <div class="container">
 
-    <input id="searchInput" type="text" placeholder="Search for song/artist here">
+        <header>
+            <h1>
+                <a href="index.html">Find Producer</a>
+            </h1>
 
-    <button id="searchButton">Search</button>
+            <div class="searchDiv">
+                <input id="searchInput" type="text" placeholder="Search for song/artist here">
 
-    <div id="searchResultsDiv" style="display:none">
-        <h2>Songs matching your search</h2>
-        <ul id="searchResultsUl">
-            <!--Generated with JS-->
-        </ul>
-    </div>
+                <button id="searchButton">Search</button>
+            </div>
+        </header>
 
-    <div id="displaySongDiv" style="display:none">
-        <h2>1 Song</h2>
-        <h3 id="songTitleHeading"></h3>
+        <main>
+            <div id="searchResultsDiv" style="display:none">
+                <h2>Songs matching your search</h2>
+                <ul id="searchResultsUl">
+                    <!--Generated with JS-->
+                </ul>
+            </div>
 
-        <h3>Produced by</h3>
-        <ul id="producersUl">
-            <!--Generated with JS-->
-        </ul>
+            <div id="displaySongDiv" style="display:none">
+                <h2 id="songTitleHeading"></h2>
 
-        <h3>Written by</h3>
-        <ul id="writersUl">
-                <!--Generated with JS-->
-        </ul>
-    </div>
+                <h3>Produced by</h3>
+                <ul id="producersUl">
+                    <!--Generated with JS-->
+                </ul>
 
-    <div id="displayArtistDiv" style="display:none">
-        <h2>Artist</h2>
-        <h3 id="artistNameHeading">
-            <!--Generated with JS-->
-        </h3>
-        <img id="artistImage" src="" alt="">
+                <h3>Written by</h3>
+                <ul id="writersUl">
+                        <!--Generated with JS-->
+                </ul>
+            </div>
+
+            <div id="displayArtistDiv" style="display:none">
+                <h2 id="artistNameHeading">
+                    <!--Generated with JS-->
+                </h2>
+                <img id="artistImage" src="" alt="">
+                
+                <ul id="songsByArtistUl">
+                    <!--Generated with JS-->
+                </ul>
+            </div>
+        </main>
         
-        <ul id="songsByArtistUl">
-            <!--Generated with JS-->
-        </ul>
-    </div>
-    
+    </div><!--/container-->
+
     <script src="js/main.js"></script>
 </body>
 </html>
