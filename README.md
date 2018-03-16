@@ -37,11 +37,11 @@ Spotify has information about credits too, but I can't see that you can access t
 
 !Search function
 
+
 !!Empty search results when new search
+/
 
-!!empty search placeholder when clicking in search box
-
-!!Now new textnode value sent to headings in html gets added to instead of replaced when clicking on a song
+!! error hantera
 
 !Some error message or guide in some way.
 
