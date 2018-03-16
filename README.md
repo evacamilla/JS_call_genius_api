@@ -53,3 +53,7 @@ empty search placeholder when clicking in search box
 Some error message or guide in some way.
 
 Feedback/animation to make it more obvious for user when something is happening/going on
+
+Make artistName clickable when displating songs in searchResults
+
+Now user can search as many times they like on the same thing
