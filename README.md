@@ -21,9 +21,6 @@ Thank you Genius.com :)
 
 
 TODO:
-
-loop out artist top songs
-
 ***
 There is a lot of un-credited tracks so I would like to access more information somehow.
 
@@ -57,3 +54,5 @@ Feedback/animation to make it more obvious for user when something is happening/
 Make artistName clickable when displating songs in searchResults
 
 Now user can search as many times they like on the same thing
+
+Toggle class instead of inline styling when show/display
