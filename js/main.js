@@ -146,9 +146,7 @@ function displayArtist(data){
     artistNameHeading.appendChild(artistNameTextNode);
     artistImage.src = artist.image_url;
 
-
-
-    console.log(artist);
+    fetchAndDisplaySongsByArtist(artist.id);
 }
 
 
