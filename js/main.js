@@ -1,25 +1,25 @@
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 
-const searchResultsDiv = document.getElementById('searchResultsDiv');
+const requestHeading = document.getElementById('requestHeading');
+
 const searchResultsUl = document.getElementById('searchResultsUl');
 
-const displaySongDiv = document.getElementById('displaySongDiv');
-const songTitleHeading = document.getElementById('songTitleHeading');
+const notSearchResultsDiv = document.getElementById('notSearchResultsDiv');
+
+const artistInfoDiv = document.getElementById('artistInfoDiv');
+const songsByArtistUl = document.getElementById('songsByArtistUl');
+
+const creditsDiv = document.getElementById('creditsDiv');
 const producersUl = document.getElementById('producersUl');
 const writersUl = document.getElementById('writersUl');
-
-const displayArtistDiv = document.getElementById('displayArtistDiv');
-const artistNameHeading = document.getElementById('artistNameHeading');
-const artistImage = document.getElementById('artistImage');
-const songsByArtistUl = document.getElementById('songsByArtistUl');
 
 
 
                       /* eventlistener */
 
 searchButton.addEventListener('click', function() {
-    //clear searchDiv
+    notSearchResultsDiv.style.display = "none";
     removeChildren(searchResultsUl);
 
     const searchQuery = searchInput.value;
@@ -94,8 +94,8 @@ function fetchAndDisplaySongsByArtist(id){
 
  /**** display functions ..kind of referred in the fetch functions*/
 
- function displaySearchResults(data){
-    searchResultsDiv.style.display = "block";
+function displaySearchResults(data){
+    requestHeading.innerHTML = "Your search results";
     const searchResultsArray = data.response.hits;
 
     for(var i = 0; i < searchResultsArray.length; i++){
@@ -113,13 +113,11 @@ function fetchAndDisplaySongsByArtist(id){
         const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
         img.src = songImgUrl;
 
-        li.appendChild(img);
         li.appendChild(songInfoTextNode);
+        li.appendChild(img);
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
-            searchResultsDiv.style.display = "none";
-            displaySongDiv.style.display = "block";
 
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
@@ -134,13 +132,19 @@ function fetchAndDisplaySongsByArtist(id){
 
 
 function displaySongFull(data){
+    notSearchResultsDiv.style.display = "block";
+    creditsDiv.style.display = "block";
+    artistInfoDiv.style.display = "none";
+    searchResultsUl.innerHTML = "";
+    songsByArtistUl.innerHTML = "";
+
     //for looping out producers and writers
     const producersArray = data.response.song.producer_artists;
     const writersArray = data.response.song.writer_artists;
     
     //song info
     const song = data.response.song;
-    songTitleHeading.innerHTML = `${song.title} By ${song.primary_artist.name}`
+    requestHeading.innerHTML = `${song.title} By ${song.primary_artist.name}`
 
     //clear producersUl
     removeChildren(producersUl);
@@ -157,8 +161,6 @@ function displaySongFull(data){
         li.appendChild(producerNameTextNode);
 
         li.addEventListener('click', function(){
-            displaySongDiv.style.display = "none";
-            displayArtistDiv.style.display = "block";
             fetchAndDisplayOneArtist(producerId);
         })
         
@@ -174,8 +176,6 @@ function displaySongFull(data){
         li.appendChild(writerNameTextNode);
 
         li.addEventListener('click', function(){
-            displaySongDiv.style.display = "none";
-            displayArtistDiv.style.display = "block";
             fetchAndDisplayOneArtist(writerId);
         })
 
@@ -183,13 +183,21 @@ function displaySongFull(data){
     }
 }
 
-
-
+//HUR GÖRA MED ARTISTIMAGE
 function displayArtist(data){
+    artistInfoDiv.innerHTML = "";
+    artistInfoDiv.style.display = "block";
+    notSearchResultsDiv.style.display = "block";
+    creditsDiv.style.display = "none";
+
     const artist = data.response.artist;
 
-    artistNameHeading.innerHTML = artist.name;
+    requestHeading.innerHTML = artist.name;
+
+    const artistImage = document.createElement('img');
+
     artistImage.src = artist.image_url;
+    artistInfoDiv.appendChild(artistImage);
 
     fetchAndDisplaySongsByArtist(artist.id);
 }
@@ -214,8 +222,6 @@ function displaySongsByArtist(data){
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
-            displayArtistDiv.style.display = "none";
-            displaySongDiv.style.display = "block";
 
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
