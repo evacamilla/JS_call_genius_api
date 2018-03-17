@@ -10,8 +10,13 @@ body{
     padding: 10px 0;
 }
 
+header {
+    margin-bottom: 20px;
+}
+
 a {
     text-decoration: none;
+    color: black;
 }
 
 h1{
@@ -24,16 +29,20 @@ h1{
     border: 1px solid red;
     display: inline-block;
     width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
     text-align: center;
 }
 
-searcResultsUl li {
+#requestHeading {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.searcResultsUl li {
     margin: 2em 0;
 }
 
-img {
+ul img {
     display:block;
     width: 150px;
     margin: 0.2em 0;
