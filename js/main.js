@@ -98,24 +98,26 @@ function displaySearchResults(data){
     requestHeading.innerHTML = "Your search results";
     const searchResultsArray = data.response.hits;
 
-    for(var i = 0; i < searchResultsArray.length; i++){
+    for(searchResult of searchResultsArray){
         //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
-        const songId = searchResultsArray[i].result.id;
+        const songId = searchResult.result.id;
 
         //store other info to be displayed in DOM
-        const songTitle = searchResultsArray[i].result.title;
-        const songArtistName = searchResultsArray[i].result.primary_artist.name;
-        const songImgUrl = searchResultsArray[i].result.song_art_image_thumbnail_url;
+        const songTitle = searchResult.result.title;
+        const songArtistName = searchResult.result.primary_artist.name;
+        const songImgUrl = searchResult.result.song_art_image_thumbnail_url;
 
         const li = document.createElement('li');
-        const img = document.createElement('img');
-
-        const songInfoTextNode = document.createTextNode(`${songTitle} By ${songArtistName}`);
-        img.src = songImgUrl;
-
-        li.appendChild(songInfoTextNode);
-        li.appendChild(img);
-
+        li.innerHTML =
+            `
+            <img class="leftUlContent" src="` + songImgUrl + `" alt="">
+            <div class="rightUlContent">
+                <h3>${songTitle}</h3>
+                <p>By ${songArtistName}<p>
+            </div>
+            `
+        ;
+        
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){
 
