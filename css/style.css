@@ -26,10 +26,9 @@ h1{
 }
 
 .searchDiv{
-    border: 1px solid red;
-    display: inline-block;
     width: fit-content;
     text-align: center;
+    margin: 0 auto;
 }
 
 #requestHeading {
@@ -38,12 +37,15 @@ h1{
     text-align: center;
 }
 
-.searcResultsUl li {
-    margin: 2em 0;
+#searchResultsUl li{
+    margin: 10px 0;
 }
 
 ul img {
-    display:block;
     width: 150px;
     margin: 0.2em 0;
+}
+
+ul li:hover, #searchButton{
+    cursor: pointer;
 }
