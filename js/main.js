@@ -115,6 +115,7 @@ function displaySearchResults(data){
                 <h3>${songTitle}</h3>
                 <p>By ${songArtistName}<p>
             </div>
+            <div class="clear"></div>
             `
         ;
         
