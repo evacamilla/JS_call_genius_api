@@ -57,6 +57,9 @@ function callApi(apiURL)
             {
             return response.json();
             })
+            .catch(function(error) {
+                console.log(error);
+            });
     return requestData;
     }   
 
