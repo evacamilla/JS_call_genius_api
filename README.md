@@ -33,14 +33,6 @@ Spotify has information about credits too, but I can't see that you can access t
 - Don't show Written by/Produced by heading or....
 - Display text like no credits/info
 
-!Design
-
-!Search function
-
-
-!!Empty search results when new search
-/
-
 !! error hantera
 
 !Some error message or guide in some way.
