@@ -28,9 +28,9 @@ searchButton.addEventListener('click', function()
 
         callApi(apiURL)
         .then(function(data) 
-        {
+            {
             displaySearchResults(data);
-        });
+            });
 
     searchInput.value = "";
     })
@@ -54,9 +54,9 @@ function callApi(apiURL)
     
     const requestData = fetch(request)
         .then(function(response) 
-        {
+            {
             return response.json();
-        })
+            })
     return requestData;
     }   
 
@@ -71,9 +71,9 @@ function fetchAndDisplayOneSong(songId)
 
     callApi(apiURL)
     .then(function(data) 
-    {
+        {
         displaySongFull(data);
-    });
+        });
     }
 
 
@@ -83,9 +83,9 @@ function fetchAndDisplayOneArtist(id)
 
     callApi(apiURL)
     .then(function(data) 
-    {
+        {
         displayArtist(data);
-    });
+        });
     }
 
 
@@ -135,7 +135,6 @@ function displaySearchResults(data)
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function()
             {
-
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
             fetchAndDisplayOneSong(songId)
@@ -172,7 +171,6 @@ function displaySongFull(data)
     //producer
     for(let producer of producersArray)
         {
-
         const producerId = producer.id;
         const producerNameTextNode = document.createTextNode(producer.name);
 
@@ -188,19 +186,21 @@ function displaySongFull(data)
         }
 
     //writer
-    for(let writer of writersArray){
+    for(let writer of writersArray)
+        {
         const writerId = writer.id;
         const writerNameTextNode = document.createTextNode(writer.name);
 
         const li = document.createElement('li');
         li.appendChild(writerNameTextNode);
 
-        li.addEventListener('click', function(){
+        li.addEventListener('click', function()
+            {
             fetchAndDisplayOneArtist(writerId);
-        })
+            })
 
         writersUl.appendChild(li);
-    }
+        }
 }
 
 //HUR GÖRA MED ARTISTIMAGE
@@ -244,8 +244,7 @@ function displaySongsByArtist(data)
                 <p>By ${songArtistName}<p>
             </div>
             <div class="clear"></div>
-            `
-        ;
+            `;
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function()
