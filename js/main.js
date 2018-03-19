@@ -213,15 +213,19 @@ function displaySongsByArtist(data){
     for(let song of songsByArtistArray){
         const songTitle = song.title;
         const songArtistName = song.primary_artist.name;
+        const songImgUrl = song.song_art_image_thumbnail_url;
 
         const li = document.createElement('li');
-        const img = document.createElement('img');
-
-        const songTextNode = document.createTextNode(`${song.title} By ${song.primary_artist.name}`);
-        img.src = song.header_image_thumbnail_url;
-
-        li.appendChild(img);
-        li.appendChild(songTextNode);
+        li.innerHTML =
+            `
+            <img class="leftUlContent" src="` + songImgUrl + `" alt="">
+            <div class="rightUlContent">
+                <h3>${songTitle}</h3>
+                <p>By ${songArtistName}<p>
+            </div>
+            <div class="clear"></div>
+            `
+        ;
 
         //eventlistener so that when clicked we call api using the songId to get more info
         li.addEventListener('click', function(){

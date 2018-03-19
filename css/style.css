@@ -13,9 +13,6 @@ body{
 header {
     margin-bottom: 20px;
 }
-img {
-    max-width: 100%;
-}
 a {
     text-decoration: none;
     color: black;
@@ -45,13 +42,9 @@ h3 {
     padding-bottom: 10px;
     width: 80%;
     margin: 0 auto;
+    text-align: center;
 }
 
-#searchResultsUl li{
-    margin: 10px 0;
-    width: 80%;
-    margin: 0 auto;
-}
 
 ul img {
     margin: 0.2em 0;
@@ -66,6 +59,12 @@ ul li {
 
 ul li:hover, #searchButton{
     cursor: pointer;
+}
+
+#searchResultsUl li, #songsByArtistUl li{
+    margin: 10px 0;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .leftUlContent {
@@ -88,4 +87,11 @@ ul li:hover, #searchButton{
     text-align: center;
     font-weight: bold;
     margin: 40px 0 10px 0;
+}
+
+#artistInfoDiv img {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 40px;
 }
