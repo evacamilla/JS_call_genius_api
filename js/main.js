@@ -18,7 +18,8 @@ const writersUl = document.getElementById('writersUl');
 
                       /* eventlistener */
 
-searchButton.addEventListener('click', function() {
+searchButton.addEventListener('click', function() 
+    {
     notSearchResultsDiv.style.display = "none";
     removeChildren(searchResultsUl);
 
@@ -26,79 +27,91 @@ searchButton.addEventListener('click', function() {
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/search?q=${searchQuery}`;
 
         callApi(apiURL)
-        .then(function(data) {
+        .then(function(data) 
+        {
             displaySearchResults(data);
         });
 
     searchInput.value = "";
-})
+    })
 
 
 
 //call to the api.. static value for myToken.. 
 //sending in special apiURL: info about what you want to fetch from where
 //handle the data using json
-function callApi(apiURL){
+function callApi(apiURL)
+    {
     //access token for security
     const myToken = 'vN_Jt2wAaah9EyS3NzUFAuW7G_uL43l7lIkWU22Ohwebb9oLbxfzwZa1mEgKpnzV';
 
-    const request = new Request(apiURL, {
+    const request = new Request(apiURL, 
+        {
         headers: new Headers({
             'Authorization': `Bearer ${myToken}`
         })
-    });
+        });
     
     const requestData = fetch(request)
-        .then(function(response) {
+        .then(function(response) 
+        {
             return response.json();
         })
     return requestData;
-}
+    }   
 
 
 
 
 /***** fetch functions using callApi */
 
-function fetchAndDisplayOneSong(songId){
+function fetchAndDisplayOneSong(songId)
+    {
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/songs/${songId}`;
 
     callApi(apiURL)
-    .then(function(data) {
+    .then(function(data) 
+    {
         displaySongFull(data);
     });
-}
+    }
 
 
-function fetchAndDisplayOneArtist(id){
+function fetchAndDisplayOneArtist(id)
+    {
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}`;
 
     callApi(apiURL)
-    .then(function(data) {
+    .then(function(data) 
+    {
         displayArtist(data);
     });
-}
+    }
 
 
-function fetchAndDisplaySongsByArtist(id){
+function fetchAndDisplaySongsByArtist(id)
+    {
     const apiURL = `https://cors-anywhere.herokuapp.com/https://api.genius.com/artists/${id}/songs`;
 
     callApi(apiURL)
-    .then(function(data) {
+    .then(function(data) 
+        {
         displaySongsByArtist(data);
-    });
-}
+        });
+    }
 
 
 
 
  /**** display functions ..kind of referred in the fetch functions*/
 
-function displaySearchResults(data){
+function displaySearchResults(data)
+    {
     requestHeading.innerHTML = "Your search results";
     const searchResultsArray = data.response.hits;
 
-    for(searchResult of searchResultsArray){
+    for(searchResult of searchResultsArray)
+        {
         //store songId to make a new call to API for more info(prod. + writer names) if user click this.. 
         const songId = searchResult.result.id;
 
@@ -120,21 +133,23 @@ function displaySearchResults(data){
         ;
         
         //eventlistener so that when clicked we call api using the songId to get more info
-        li.addEventListener('click', function(){
+        li.addEventListener('click', function()
+            {
 
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
             fetchAndDisplayOneSong(songId)
-        });
+            });
 
         //lastly append li to ul in DOM
         searchResultsUl.appendChild(li);
+        }
     }
-}
 
 
 
-function displaySongFull(data){
+function displaySongFull(data) 
+    {
     notSearchResultsDiv.style.display = "block";
     creditsDiv.style.display = "block";
     artistInfoDiv.style.display = "none";
@@ -155,7 +170,8 @@ function displaySongFull(data){
     removeChildren(writersUl);
 
     //producer
-    for(let producer of producersArray){
+    for(let producer of producersArray)
+        {
 
         const producerId = producer.id;
         const producerNameTextNode = document.createTextNode(producer.name);
@@ -163,12 +179,13 @@ function displaySongFull(data){
         const li = document.createElement('li');
         li.appendChild(producerNameTextNode);
 
-        li.addEventListener('click', function(){
+        li.addEventListener('click', function()
+            {
             fetchAndDisplayOneArtist(producerId);
-        })
+            })
         
         producersUl.appendChild(li);
-    }
+        }
 
     //writer
     for(let writer of writersArray){
@@ -187,7 +204,8 @@ function displaySongFull(data){
 }
 
 //HUR GÖRA MED ARTISTIMAGE
-function displayArtist(data){
+function displayArtist(data)
+    {
     artistInfoDiv.innerHTML = "";
     artistInfoDiv.style.display = "block";
     notSearchResultsDiv.style.display = "block";
@@ -203,14 +221,16 @@ function displayArtist(data){
     artistInfoDiv.appendChild(artistImage);
 
     fetchAndDisplaySongsByArtist(artist.id);
-}
+    }
 
 
 
-function displaySongsByArtist(data){
+function displaySongsByArtist(data)
+    {
     songsByArtistArray = data.response.songs;
 
-    for(let song of songsByArtistArray){
+    for(let song of songsByArtistArray)
+        {
         const songTitle = song.title;
         const songArtistName = song.primary_artist.name;
         const songImgUrl = song.song_art_image_thumbnail_url;
@@ -228,21 +248,24 @@ function displaySongsByArtist(data){
         ;
 
         //eventlistener so that when clicked we call api using the songId to get more info
-        li.addEventListener('click', function(){
+        li.addEventListener('click', function()
+            {
 
             //to send parameter without calling the function this works
             //lke the function embedded in the anonymous function..(..??)
             fetchAndDisplayOneSong(song.id)
-        });
+            });
 
         songsByArtistUl.appendChild(li);
+        }
     }
-}
 
 
 
-function removeChildren(parentToRemoveFrom){
-    while (parentToRemoveFrom.firstChild) {
-    parentToRemoveFrom.removeChild(parentToRemoveFrom.firstChild);
+function removeChildren(parentToRemoveFrom)
+    {
+    while (parentToRemoveFrom.firstChild) 
+        {
+        parentToRemoveFrom.removeChild(parentToRemoveFrom.firstChild);
+        }
     }
-}
